@@ -122,7 +122,7 @@
 				<executions>
 					<execution>
 						<id>process-sources</id>
-						<phase>generate-sources</phase>
+						<phase>process-sources</phase>
 						<goals>
 							<goal>shell</goal>
 						</goals>
@@ -130,13 +130,15 @@
 							<workDir>src/gnu</workDir>
 							<script>
 								#!/bin/sh
-								sed -i \
+								sed \
 								-e 's|^\(libhyphen_la_LDFLAGS =\)\(.*\)$|\1 ${nar.install_name.option} ${nar.rpath.option} -avoid-version \2|' \
-								Makefile.am
-								sed -i \
+								-e '/^hyph_DATA.*/d' \
+								../../target/checkout/Makefile.am > Makefile.am
+								sed \
 								-e '/^AC_INIT.*$/a\
-								CFLAGS="$CFLAGS ${nar.arch.option}"' \
-								configure.in
+								CFLAGS="$CFLAGS ${nar.arch.option}"\
+								' \
+								../../target/checkout/configure.in > configure.in
 								rm configure
 								rm Makefile.in
 								echo Running autoreconf...
