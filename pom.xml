@@ -133,7 +133,6 @@
 								#!/bin/sh
 								sed \
 								-e 's|^\(libhyphen_la_LDFLAGS =\)\(.*\)$|\1 ${nar.install_name.option} ${nar.rpath.option} -avoid-version \2|' \
-								-e '/^hyph_DATA.*/d' \
 								../../target/checkout/Makefile.am > Makefile.am
 								sed \
 								-e '/^AC_INIT.*$/a\
@@ -200,13 +199,7 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>windows</id>
-			<activation>
-				<property>
-					<name>host.os</name>
-					<value>mingw32</value>
-				</property>
-			</activation>
+			<id>cross-compile</id>
 			<properties>
 				<nar.arch.option></nar.arch.option>
 				<nar.rpath.option></nar.rpath.option>
@@ -218,9 +211,9 @@
 					<plugin>
 						<artifactId>maven-nar-plugin</artifactId>
 						<configuration>
-							<os>Windows</os>
+							<os>${host.os}</os>
 							<linker>
-								<name>${host.os}_gpp</name>
+								<name>gpp</name>
 							</linker>
 						</configuration>
 						<executions>
