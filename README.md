@@ -1,16 +1,20 @@
 Build
 -----
 
-    mvn clean install
+To build for all platforms at once:
 
-To build for 32 bit on a 64 bit machine:
+    make clean all
 
-    mvn clean install -Dos.arch=i386
+This requires [Docker](https://www.docker.com). Mac binaries will only
+be build if the host platform is Mac OS.
 
 Deploy
 ------
 
-To deploy to Sonatype OSS, use the `sonatype-oss-release` profile:
+To deploy a snapshot to Sonatype OSS:
 
-      mvn clean deploy -P sonatype-oss-release
-      
+    make snapshot
+
+To make a release:
+
+    make release

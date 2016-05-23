@@ -1,5 +1,4 @@
 .DS_Store
-target
-src
-.classpath
-.project
+/target/
+/src/
+/.m2/
