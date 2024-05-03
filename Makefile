@@ -60,3 +60,6 @@ snapshot :
 release :
 	[[ $(VERSION) != *-SNAPSHOT ]]
 	$(MVN) nar:nar-package jar:jar gpg:sign install:install deploy:deploy -Psonatype-deploy
+
+install :
+	$(MVN) nar:nar-prepare-package nar:nar-package jar:jar install:install
