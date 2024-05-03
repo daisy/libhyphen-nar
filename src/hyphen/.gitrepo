@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:snaekobbi/hyphen.git
+	branch = windows-test
+	commit = d13b9496273b7eac09de3d19bedc005206fec3c3
+	parent = d8a0355d400b7b3ce1af6a5e8c04306eb655e473
+	cmdver = 0.3.1
