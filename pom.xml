@@ -15,9 +15,9 @@
 	<description>libhyphen packaged in a NAR (Native ARchive).</description>
 	<url>https://github.com/snaekobbi/libhyphen-nar</url>
 	<scm>
-		<connection>scm:git:git@github.com:snaekobbi/libhyphen-nar.git</connection>
-		<developerConnection>scm:git:git@github.com:snaekobbi/libhyphen-nar.git</developerConnection>
-		<url>git@github.com:snaekobbi/libhyphen-nar.git</url>
+		<connection>scm:git:git@github.com:daisy/libhyphen-nar.git</connection>
+		<developerConnection>scm:git:git@github.com:daisy/libhyphen-nar.git</developerConnection>
+		<url>git@github.com:daisy/libhyphen-nar.git</url>
 	</scm>
 	<licenses>
 		<license>
@@ -87,29 +87,11 @@
 		</pluginManagement>
 		<plugins>
 			<plugin>
-				<artifactId>maven-scm-plugin</artifactId>
-				<version>1.9</version>
-				<executions>
-					<execution>
-						<id>checkout-sources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>checkout</goal>
-						</goals>
-						<configuration>
-							<connectionUrl>scm:git:git://github.com/snaekobbi/hyphen.git</connectionUrl>
-							<scmVersion>2.8.8-1</scmVersion>
-							<scmVersionType>tag</scmVersionType>
-							<skipCheckoutIfExists>true</skipCheckoutIfExists>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>com.github.maven-nar</groupId>
 				<artifactId>nar-maven-plugin</artifactId>
 				<extensions>true</extensions>
 				<configuration>
+					<gnuSourceDirectory>target/generated-sources/hyphen</gnuSourceDirectory>
 					<gnuConfigureArgs>${nar.host.option}</gnuConfigureArgs>
 					<libraries>
 						<library>
@@ -183,11 +165,11 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>src/gnu</outputDirectory>
+							<outputDirectory>target/generated-sources/hyphen</outputDirectory>
 							<overwrite>true</overwrite>
 							<resources>
 								<resource>
-									<directory>target/checkout</directory>
+									<directory>src/hyphen</directory>
 								</resource>
 							</resources>
 						</configuration>
@@ -226,19 +208,19 @@
 							<goal>shell</goal>
 						</goals>
 						<configuration>
-							<workDir>src/gnu</workDir>
+							<workDir>target/generated-sources/hyphen</workDir>
 							<script>
 								#!/bin/sh
 								sed \
 								-e 's|^\(libhyphen_la_LDFLAGS =\)\(.*\)$|\1 ${nar.install_name.option} ${nar.rpath.option} -avoid-version \2|' \
-								../../target/checkout/Makefile.am > Makefile.am
+								../../../src/hyphen/Makefile.am > Makefile.am
 								sed \
 								-e 's|^\(AC_INIT(\[hyphen\],\)[^,]*\(,.*\)$|\1 [${project.version}]\2|' \
 								-e 's|^\(AM_INIT_AUTOMAKE(hyphen,\)[^)]*)$|\1 ${project.version})|' \
 								-e '/^AC_INIT.*$/a\
 								CFLAGS="$CFLAGS ${nar.arch.option} ${nar.debug.option}"\
 								' \
-								../../target/checkout/configure.ac > configure.ac
+								../../../src/hyphen/configure.ac > configure.ac
 								echo Running autoreconf...
 								autoreconf -fvi
 								chmod +x tbhyphext.sh
@@ -246,16 +228,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>src</directory>
-						</fileset>
-					</filesets>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
