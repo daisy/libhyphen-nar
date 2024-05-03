@@ -1,5 +1,17 @@
-FROM debian:wheezy
-RUN apt-get update && apt-get install -y make autoconf automake libtool mingw32 mingw-w64 libc6-dev-i386
-RUN apt-get install -y openjdk-7-jdk maven
-RUN apt-get install -y git
-RUN apt-get install -y gawk
+FROM debian:stretch
+RUN echo "deb     http://archive.debian.org/debian stretch main"                    >/etc/apt/sources.list
+RUN echo "deb-src http://archive.debian.org/debian stretch main"                   >>/etc/apt/sources.list
+RUN echo "deb     http://archive.debian.org/debian stretch-backports main"         >>/etc/apt/sources.list
+RUN echo "deb     http://archive.debian.org/debian-security stretch/updates main"  >>/etc/apt/sources.list
+RUN echo "deb-src http://archive.debian.org/debian-security stretch/updates main"  >>/etc/apt/sources.list
+RUN apt-get update && \
+    apt-get install -y make \
+                       autoconf \
+                       automake \
+                       libtool \
+                       libc6-dev-i386 \
+                       mingw-w64 \
+                       openjdk-8-jdk \
+                       maven \
+                       git \
+                       gawk
