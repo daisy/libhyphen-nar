@@ -116,6 +116,9 @@
 							<type>shared</type>
 						</library>
 					</libraries>
+					<linker>
+						<name>g++</name>
+					</linker>
 				</configuration>
 				<executions>
 					<!--
