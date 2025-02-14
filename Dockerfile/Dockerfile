@@ -4,14 +4,17 @@ RUN echo "deb-src http://archive.debian.org/debian stretch main"                
 RUN echo "deb     http://archive.debian.org/debian stretch-backports main"         >>/etc/apt/sources.list
 RUN echo "deb     http://archive.debian.org/debian-security stretch/updates main"  >>/etc/apt/sources.list
 RUN echo "deb-src http://archive.debian.org/debian-security stretch/updates main"  >>/etc/apt/sources.list
+ARG TARGETARCH
 RUN apt-get update && \
     apt-get install -y make \
                        autoconf \
                        automake \
                        libtool \
-                       libc6-dev-i386 \
-                       mingw-w64 \
                        openjdk-8-jdk \
                        maven \
                        git \
-                       gawk
+                       gawk && \
+    if [ "${TARGETARCH}" = amd64 ]; then \
+        apt-get install -y libc6-dev-i386 \
+                           mingw-w64; \
+    fi
