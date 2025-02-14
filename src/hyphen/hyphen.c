@@ -718,7 +718,7 @@ int hnj_hyphen_lhmin(int utf8, const char *word, int word_size, char * hyphens,
 
     for (j = 0; i < lhmin && word[j] != '\0'; i++) do {
       // check length of the non-standard part
-      if (*rep && *pos && *cut && (*rep)[j]) {
+      if (rep && pos && cut && *rep && *pos && *cut && (*rep)[j]) {
         char * rh = strchr((*rep)[j], '=');
         if (rh && (hnj_hyphen_strnlen(word, j - (*pos)[j] + 1, utf8) +
           hnj_hyphen_strnlen((*rep)[j], rh - (*rep)[j], utf8)) < lhmin) {
@@ -750,7 +750,7 @@ int hnj_hyphen_rhmin(int utf8, const char *word, int word_size, char * hyphens,
 
     for (j = word_size - 1; i < rhmin && j > 0; j--) {
       // check length of the non-standard part
-      if (*rep && *pos && *cut && (*rep)[j]) {
+      if (rep && pos && cut && *rep && *pos && *cut && (*rep)[j]) {
         char * rh = strchr((*rep)[j], '=');
         if (rh && (hnj_hyphen_strnlen(word + j - (*pos)[j] + (*cut)[j] + 1, 100, utf8) +
           hnj_hyphen_strnlen(rh + 1, strlen(rh + 1), utf8)) < rhmin) {
@@ -967,7 +967,7 @@ int hnj_hyphen_hyph_(HyphenDict *dict, const char *word, int word_size,
             int hyph = 0;
             prep_word[i + 2] = '\0';
             /* non-standard hyphenation at compound boundary (Schiffahrt) */
-            if (rep && *rep && *pos && *cut && (*rep)[i]) {
+            if (rep && pos && cut && *rep && *pos && *cut && (*rep)[i]) {
                 char * l = strchr((*rep)[i], '=');
                 size_t offset = 2 + i - (*pos)[i];
                 strncpy(prep_word + offset, (*rep)[i], prep_word_size - offset - 1);
@@ -1000,7 +1000,7 @@ int hnj_hyphen_hyph_(HyphenDict *dict, const char *word, int word_size,
                 }
             }
             prep_word[i + 2] = word[i + 1];
-            if (*rep && *pos && *cut && (*rep)[i]) {
+            if (rep && pos && cut && *rep && *pos && *cut && (*rep)[i]) {
                 size_t offset = 1;
                 strncpy(prep_word + offset, word, prep_word_size - offset - 1);
                 prep_word[prep_word_size - 1] = '\0';
@@ -1082,7 +1082,7 @@ void hnj_hyphen_hyphword(const char * word, int l, const char * hyphens,
   for (i = 0, j = 0; i < l; i++, j++) {
     if (hyphens[i]&1) {
       hyphword[j] = word[i];
-      if (*rep && *pos && *cut && (*rep)[i]) {
+      if (rep && pos && cut && *rep && *pos && *cut && (*rep)[i]) {
         size_t offset = j - (*pos)[i] + 1;
         strncpy(hyphword + offset, (*rep)[i], hyphenslen - offset - 1);
         hyphword[hyphenslen-1] = '\0';
