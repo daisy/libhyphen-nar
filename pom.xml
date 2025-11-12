@@ -187,6 +187,8 @@
 									<directory>target/nar/gnu/${nar.aol}/target/lib</directory>
 									<includes>
 										<include>*.dll.a</include>
+										<include>libhyphen.dylib</include>
+										<include>libhyphen.so</include>
 									</includes>
 								</resource>
 							</resources>
